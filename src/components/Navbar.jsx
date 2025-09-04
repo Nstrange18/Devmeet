@@ -6,7 +6,7 @@ import { UserContext } from "./Hero";
 
 
 const Navbar = () => {
-  const [isLoggedIn] = useState(true);
+  const [isLoggedIn] = useState(false);
   // const dropDownRef = useRef()
 
   const {isMenuOpen, setIsMenuOpen, isVisible, setIsVisible} = useContext(UserContext)
@@ -48,7 +48,7 @@ const Navbar = () => {
           ) : (
 
             <div className="get-started">
-              <button className="p-2 bg-[#5a9f36] hover:bg-gradient-to-r from-[#193e9b] via-[#1d5783] to-[#246f8f] transition-colors duration-300 ease-in-out rounded-sm">Login</button>
+              <button className="!py-1 !px-2 bg-[#5a9f36] hover:bg-gradient-to-r from-[#193e9b] via-[#1d5783] to-[#246f8f] transition-colors duration-300 ease-in-out rounded-sm"><Link to="login">Login</Link></button>
             </div>
           )}
 
