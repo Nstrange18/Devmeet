@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Icon } from "@iconify/react";
 import { UserContext } from "./Hero";
 
@@ -7,7 +7,8 @@ import { UserContext } from "./Hero";
 
 const Navbar = () => {
   const [isLoggedIn] = useState(false);
-  // const dropDownRef = useRef()
+  const dropDownRef = useRef(null);
+  const buttonRef = useRef(null)
 
   const {isMenuOpen, setIsMenuOpen, isVisible, setIsVisible} = useContext(UserContext)
   
@@ -16,13 +17,28 @@ const Navbar = () => {
       setIsVisible(true);
     }, 300);
 
-    return () => clearTimeout(timer);
-  }, [setIsVisible]);
+    function handleClickOutside(event) {
+    if (dropDownRef.current && !dropDownRef.current.contains(event.target) && buttonRef.current && !buttonRef.current.contains(event.target) && isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+
+    return () => {
+      clearTimeout(timer);
+
+      document.removeEventListener('mousedown', handleClickOutside)
+    };
+  }, [isMenuOpen, setIsMenuOpen]);
+
+  
 
   return (
     <>
       <div className={`
-          absolute flex justify-between items-center w-full !px-6 !py-4 
+          fixed flex justify-between items-center w-full !px-6 !py-4 
           bg-transparent text-white 
           transition duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}
       `}>
@@ -32,7 +48,7 @@ const Navbar = () => {
           {isLoggedIn ? (
 
             <div className="flex items-center gap-2">
-              <button onClick={() => { setIsMenuOpen(!isMenuOpen) }} className={`focus:outline-none z-20`}>
+              <button ref={buttonRef} onClick={() => {setIsMenuOpen(!isMenuOpen) }} className={`focus:outline-none z-20`}>
                 <div className={`hamburger-menu flex flex-col gap-1 cursor-pointer z-2 !p-2`}>
                   <div className="w-6 rounded-md h-1 bg-white"></div>
                   <div className="w-6 rounded-md h-1 bg-white"></div>
@@ -53,7 +69,7 @@ const Navbar = () => {
           )}
 
           {/* Dropdown menu now takes full screen on mobile and larger screens, but you can change that */}
-            <div className={`
+            <div ref={dropDownRef} className={`
               ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} 
               absolute top-0 left-0 w-60 h-screen p-4 !pt-20 
               bg-gradient-to-bl from-[#3a7d44] to-[#67883e] shadow-[8px_8px_10px_rgba(0,0,0,0.1)]  bg-opacity-90 text-white 
