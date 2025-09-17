@@ -78,7 +78,7 @@ const Login = () => {
             {/* <pre>{  JSON.stringify(formValues, undefined, 2) }</pre> <br /> */}
             
             {/* Signed in successfully message */}
-            {Object.keys(formErrors).length === 0 && isSubmit ? <div className="!p-2 rounded-2xl w-4/5 bg-black text-white">Signed in successfully</div> : <pre>{JSON.stringify(formValues, undefined, 2)}</pre>}
+            {Object.keys(formErrors).length === 0 && isSubmit ? <div className="!p-2 rounded-2xl w-4/5 bg-black text-white">Signed in successfully</div> : null}
 
             <h2 className="font-mono !mb-6 text-2xl">Log in</h2>
 
@@ -117,7 +117,7 @@ const Login = () => {
                   <div className="bg-gray-300 h-0.5 w-42"></div>
               </div>
 
-              <Link to="signup"><button className="cursor-pointer text-white bg-gradient-to-bl from-[#3d633d] via-[#46a546] to-[#3dad68] w-90 !py-2 rounded-4xl">Sign up</button></Link>
+              <Link to="/signup"><button className="cursor-pointer text-white bg-gradient-to-bl from-[#3d633d] via-[#46a546] to-[#3dad68] w-90 !py-2 rounded-4xl">Sign up</button></Link>
             </section>
           </form>
         </main>
